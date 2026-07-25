@@ -3,6 +3,20 @@ local M = {
    event = { "BufReadPre", "BufNewFile" }
 }
 
+local function python_path(root_dir)
+    local candidates = {
+        root_dir .. "/.venv/bin/python",
+        root_dir .. "/venv/bin/python",
+    }
+
+    for _, path in ipairs(candidates) do
+        if vim.fn.executable(path) == 1 then
+            return path
+        end
+    end
+
+    return vim.fn.exepath("python3")
+end
 function M.config()
    local cmp_caps = require("cmp_nvim_lsp").default_capabilities()
 
@@ -78,6 +92,81 @@ function M.config()
          },
       },
    })
+   vim.lsp.config("pylsp", {
+      cmd = { "pylsp" },
+      capabilities = cmp_caps,
+      root_dir = function(bufnr, on_dir)
+          local fname = vim.api.nvim_buf_get_name(bufnr)
+          local root = vim.fs.root(fname, {
+              "pyproject.toml",
+              "setup.py",
+              "setup.cfg",
+              "requirements.txt",
+              ".git",
+          })
+          root = root or vim.fs.dirname(fname)
+     
+          on_dir(root)
+      end,
+      before_init = function(_, config)
+          config.settings = config.settings or {}
+          config.settings.pylsp = config.settings.pylsp or {}
+          config.settings.pylsp.plugins = config.settings.pylsp.plugins or {}
+          if config.root_dir then
+              config.settings.pylsp.plugins.jedi = {
+                  environment = python_path(config.root_dir),
+              }
+          end
+      end, 
+      settings = {
+         pylsp = {
+            plugins = {
+               -- Use Ruff for linting
+               ruff = {
+                   enabled = true,
+                   formatEnabled = false, -- let another formatter handle formatting
+                   extendSelect = { "E", "F", "W", "I" },
+                   ignore = {},
+               },
+               pycodestyle = {
+                  enabled = true,
+               },
+               pyflakes = {
+                  enabled = true,
+               },
+               mccabe = {
+                  enabled = true,
+               },
+               autopep8 = {
+                  enabled = true,
+               },
+               yapf = {
+                  enabled = true,
+               },
+
+               jedi_completion = {
+                  fuzzy = true,
+               },
+               jedi_definition = {
+                  enabled = true,
+               },
+               jedi_hover = {
+                  enabled = true,
+               },
+               jedi_references = {
+                  enabled = true,
+               },
+               jedi_signature_help = {
+                  enabled = true,
+               },
+               jedi_symbols = {
+                  enabled = true,
+               },
+            },
+         },
+      },
+   })
+   vim.lsp.enable("pylsp")
    vim.lsp.enable("clangd")
    vim.lsp.enable("rust_analyzer")
 end
@@ -98,9 +187,10 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 vim.diagnostic.config({
    virtual_text = true,
-   signs = false,
+   signs = true,
    underline = true,
-   update_in_insert = false,
+   update_in_insert = true,
+   severity_sort = true,
 })
 
 return M
