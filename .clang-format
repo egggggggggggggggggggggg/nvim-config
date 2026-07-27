@@ -1,0 +1,54 @@
+BasedOnStyle: LLVM
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+
+# =========================
+# General formatting
+# =========================
+ColumnLimit: 100
+BreakBeforeBraces: Attach
+
+# Keep code from being squeezed onto single lines
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+AllowShortBlocksOnASingleLine: Never
+
+# =========================
+# Function / call formatting
+# (prevents dense one-line signatures)
+# =========================
+BinPackArguments: false
+BinPackParameters: false
+AllowAllArgumentsOnNextLine: false
+AllowAllParametersOfDeclarationOnNextLine: false
+
+# =========================
+# Struct / class field readability
+# =========================
+# This is the closest clang-format gets to "one field per line"
+AlignConsecutiveDeclarations: true
+AlignConsecutiveAssignments: true
+
+# Force breaks in multi-variable declarations more often
+SeparateDefinitionBlocks: Always
+
+# Encourage breaking after each member declaration grouping
+BreakBeforeBinaryOperators: None
+
+# =========================
+# Constructor formatting (often affects struct-like types)
+# =========================
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+BreakConstructorInitializers: BeforeColon
+
+# =========================
+# Pointer/reference style consistency (optional but common)
+# =========================
+PointerAlignment: Left
+
+# =========================
+# Includes
+# =========================
+SortIncludes: false
