@@ -39,6 +39,36 @@ return {
         "onsails/lspkind.nvim",
     },
     config = function()
+        local ls = require("luasnip")
+        local s = ls.snippet
+        local t = ls.text_node
+        local i = ls.insert_node
+        ls.add_snippets("cpp", {
+          s("docs", {
+            t({
+              "/**",
+              " * @brief ",
+            }),
+            i(1, "Function description"),
+            t({
+              "",
+              " *",
+              " * @param ",
+            }),
+            i(2, "parameter"),
+            t({
+              " Description of parameter.",
+              " *",
+              " * @return ",
+            }),
+            i(3, "Return value description"),
+            t({
+              "",
+              " */",
+            }),
+          }),
+        })
+
         local lspkind = require("lspkind")
         local cmp = require("cmp")
         local luasnip = require("luasnip")
