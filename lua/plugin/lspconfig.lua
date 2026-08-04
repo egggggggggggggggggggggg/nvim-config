@@ -166,6 +166,53 @@ function M.config()
          },
       },
    })
+   vim.lsp.config("hls", {
+      cmd = { "haskell-language-server-wrapper", "--lsp" },
+      capabilities = cmp_caps,
+      root_dir = function(bufnr, on_dir)
+         local fname = vim.api.nvim_buf_get_name(bufnr)
+         local root = vim.fs.root(fname, {
+            "cabal.project",
+            "stack.yaml",
+            "hie.yaml",
+            ".git",
+         })
+         if root then
+            on_dir(root)
+            return
+         end
+         local dir = vim.fs.dirname(fname)
+         while dir do
+            local cabals = vim.fn.globpath(dir, "*.cabal", false, true)
+            if #cabals > 0 then
+               on_dir(dir)
+               return
+            end
+            local parent = vim.fs.dirname(dir)
+            if parent == dir then
+               break
+            end
+            dir = parent
+         end
+         on_dir(vim.fs.dirname(fname))
+      end,
+      settings = {
+         haskell = {
+            formattingProvider = "fourmolu",
+            checkProject = true,
+            checkParents = "CheckOnSave",
+            plugin = {
+               stan = {
+                  globalOn = true,
+               },
+               hlint = {
+                  globalOn = true,
+               },
+            },
+         },
+      },
+   })
+   vim.lsp.enable("hls")
    vim.lsp.enable("pylsp")
    vim.lsp.enable("clangd")
    vim.lsp.enable("rust_analyzer")
