@@ -1,3 +1,4 @@
+set print pretty on
 skip function malloc
 skip function calloc
 skip function realloc
