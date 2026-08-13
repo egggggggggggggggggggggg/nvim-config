@@ -13,16 +13,15 @@ spec("plugin.nvim-scrollbar")
 spec("plugin.toggleterm")
 spec("plugin.nvim-autopairs")
 spec("plugin.nvim-tree")
-spec("plugin.fidget")
-spec("plugin.better-diag")
-spec("plugin.multicursor")
+-- spec("plugin.fidget")
+-- spec("plugin.better-diag")
+-- spec("plugin.multicursor")
 --probably not worth using for a minor visual improvement
-spec("plugin.noice")
-
+-- spec("plugin.noice")
+--
 -- lsp related stuff
 spec("plugin.cmp")
 spec("plugin.treesitter")
-spec("plugin.LSP.mason")
 spec("plugin.lspconfig")
 vim.cmd("highlight! IblIndent guifg=#5c4a72 gui=nocombine")
 vim.cmd("highlight! IblWhitespace guifg=#d16cbd gui=nocombine")
