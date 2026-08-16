@@ -1,11 +1,15 @@
 vim.g.mapleader = " "
 vim.o.autowriteall = false
+vim.o.winborder = 'rounded'
+vim.opt.cindent = true
 vim.api.nvim_create_autocmd("BufWritePre", {
    pattern = {"*.rs", "*.c", "*.h"},
    callback = function()
       vim.lsp.buf.format({ async = false })
    end,
 })
+
+
 vim.opt.nu = true
 vim.opt.relativenumber = true
 vim.opt.iskeyword:remove('.')

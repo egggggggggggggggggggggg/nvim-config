@@ -8,7 +8,7 @@ vim.api.nvim_set_keymap('i', 'jk', '<Esc>', { noremap = true, silent = true })
 local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>ff", builtin.find_files)
 -- vim.keymap.set("n", "<C-g>", builtin.git_files)
-vim.keymap.set("n", "<leader>d", function()
+vim.keymap.set("n", "<leader>dd", function()
    require("telescope.builtin").diagnostics({
       sort_by = "severity", -- sort by severity (errors first)
    })
@@ -98,6 +98,8 @@ vim.keymap.set("n", "<leader>ch", vim.lsp.buf.signature_help)
 -- nvim branch keymaps
 vim.keymap.set('n', '<leader><Tab>', '<cmd>NvimTreeToggle<CR>')
 
+
+vim.keymap.set('n', "<leader>sk", '<cmd>Screenkey<CR>')
 
 -- stupid personal preference stuff
 vim.keymap.set('n', "<C-s>", vim.cmd.write, { silent = true })
