@@ -19,43 +19,60 @@ local function from_palette(palette, override)
 end
 
 local palette = {
+    -- Core
     bg0            = "#052529",
-    fg             = '#b2cacd',
-    grey_blue      = "#b2cacd",
-    yolk_yellow    = "#ffd700",
-    yellow         = "#ffd700",
-    orange         = "#e66533",
-    tan            = "#e4b781",
-    pink           = "#df769b",
-    mint_green     = "#49e9a6",
-    brown_orange   = "#d67e5c",
-    br_highlight_0 = "#ffd700",
-    br_highlight_1 = "#da70d6",
-    br_highlight_2 = "#179fff",
-    purple         = "#7060eb",
-    cyan           = "#16a3b6",
-    monotone       = "#5b858b",
-    bg1            = '#1A3C43', -- CursorLine/Sign
-    bg2            = '#0A1C1F', -- Pmenu
-    bg3            = '#1A3C43', -- StatusLine
-    bg4            = '#0A1C1F', -- Tabline/Winbar
-    bg_red         = '#3A2727',
-    bg_green       = '#2B4234',
-    bg_blue        = '#193B41',
-    red            = '#D17B9A',
-    green          = '#78E0A6',
-    blue           = '#64AAE4',
-    grey           = '#455B5F',
-    light_grey     = '#64848A',
-    light_yellow   = '#DDB988',
-    light_blue     = '#49d6e9',
-    none           = 'NONE',
-    constant_orang = '#d59718',
-    NEON_GREEN     = '#39FF14',
-    white          = '#FFFFFF',
-    real_red       = '#ff0000',
-}
-local function deep_merge(a, b)
+    fg             = "#D9F3F5",
+    grey_blue      = "#B9D9DD",
+
+    -- Primary syntax
+    yolk_yellow    = "#FFD83D",
+    yellow         = "#FFD83D",
+    orange         = "#FF8A4C",
+    tan            = "#F2C47D",
+    pink           = "#FF79B0",
+    mint_green     = "#50F2AA",
+    brown_orange   = "#EFA06B",
+
+    -- High contrast punctuation
+    br_highlight_0 = "#FFD83D",
+    br_highlight_1 = "#E78BFF",
+    br_highlight_2 = "#32C7FF",
+
+    purple         = "#A78BFA",
+    cyan           = "#29D9E8",
+
+    -- Secondary text
+    monotone       = "#6F9BA1",
+
+    -- UI
+    bg1            = "#173E45",
+    bg2            = "#0A2024",
+    bg3            = "#173E45",
+    bg4            = "#0A2024",
+
+    bg_red         = "#432A30",
+    bg_green       = "#183D30",
+    bg_blue        = "#143C48",
+
+    -- Diagnostics / secondary colors
+    red            = "#FF6B8A",
+    green          = "#67E8A5",
+    blue           = "#62B9FF",
+
+    grey           = "#45656A",
+    light_grey     = "#72999F",
+
+    light_yellow   = "#FFD28A",
+    light_blue     = "#55E8F5",
+
+    none           = "NONE",
+
+    constant_orang = "#FFB52E",
+
+    NEON_GREEN     = "#39FF14",
+    white          = "#FFFFFF",
+    real_red       = "#FF4D5A",
+}local function deep_merge(a, b)
     local result = {}
 
     for k, v in pairs(a or {}) do
@@ -297,9 +314,28 @@ from_palette(palette, cpp_overrides)
 local c_overrides = Merge(override, ctheme);
 from_palette(palette, c_overrides)
 
+vim.api.nvim_set_hl(0, "Comment", {
+    fg = "#caf4fa",
+    italic = true,
+})
+
+vim.api.nvim_set_hl(0, "@comment", {
+    fg = "#caf4fa",
+    italic = true,
+})
+
+vim.api.nvim_set_hl(0, "LineNr", {
+    fg = "#42666B",
+    bg = "NONE",
+})
+
+vim.api.nvim_set_hl(0, "CursorLineNr", {
+    fg = palette.yolk_yellow,
+    bg = "NONE",
+    bold = true,
+})
 
 
--- Make background transparent
 local transparent_groups = {
     "Normal",
     "NormalNC",
@@ -313,8 +349,47 @@ local transparent_groups = {
     "MsgArea",
     "TelescopeNormal",
     "TelescopeBorder",
+    "StatusLine",
+    "StatusLineNC",
+    "TabLine",
+    "TabLineFill",
+    "WinBar",
+    "WinBarNC",
 }
 
 for _, group in ipairs(transparent_groups) do
-   vim.api.nvim_set_hl(0, group, { bg = "NONE" })
+    vim.api.nvim_set_hl(0, group, {
+        bg = "NONE",
+    })
 end
+
+vim.api.nvim_set_hl(0, "FloatBorder", {
+    fg = palette.cyan,
+    bg = "NONE",
+})
+
+vim.api.nvim_set_hl(0, "StatusLine", {
+    fg = palette.fg,
+    bg = "NONE",
+})
+
+vim.api.nvim_set_hl(0, "StatusLineNC", {
+    fg = palette.monotone,
+    bg = "NONE",
+})
+
+vim.api.nvim_set_hl(0, "WinBar", {
+    fg = palette.grey_blue,
+    bg = "NONE",
+})
+
+vim.api.nvim_set_hl(0, "Pmenu", {
+    fg = palette.fg,
+    bg = "#0A2024",
+})
+
+vim.api.nvim_set_hl(0, "PmenuSel", {
+    fg = "#FFFFFF",
+    bg = "#174A52",
+    bold = true,
+})
