@@ -357,11 +357,11 @@ local transparent_groups = {
     "WinBarNC",
 }
 
-for _, group in ipairs(transparent_groups) do
-    vim.api.nvim_set_hl(0, group, {
-        bg = "NONE",
-    })
-end
+-- for _, group in ipairs(transparent_groups) do
+--     vim.api.nvim_set_hl(0, group, {
+--         bg = "NONE",
+--     })
+-- end
 
 vim.api.nvim_set_hl(0, "FloatBorder", {
     fg = palette.cyan,
