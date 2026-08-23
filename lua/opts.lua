@@ -3,7 +3,7 @@ vim.o.autowriteall = false
 vim.o.winborder = 'rounded'
 vim.opt.cindent = true
 vim.api.nvim_create_autocmd("BufWritePre", {
-   pattern = {"*.rs", "*.c", "*.h"},
+   pattern = {"*.rs", "*.c", "*.h", "*.cpp", "*.hpp", ".cc"},
    callback = function()
       vim.lsp.buf.format({ async = false })
    end,
